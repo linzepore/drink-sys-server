@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
     @PostMapping("/getOrder")
     public String getOrder(String openid){
-        return "";
+        return "user";
     }
 }
