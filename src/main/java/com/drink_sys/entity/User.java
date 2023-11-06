@@ -19,4 +19,5 @@ public class User {
     private Date birthdate;
     private String location;
     private String mobile;
+    private String code;
 }

@@ -22,4 +22,5 @@ public class FoodController {
         System.out.println(f);
         return "OK的，收到了"+f;
     }
+
 }
