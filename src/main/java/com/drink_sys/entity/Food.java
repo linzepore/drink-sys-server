@@ -1,5 +1,6 @@
 package com.drink_sys.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,5 +18,6 @@ public class Food {
     private double price;
     private String description;
     private String image;
+    @TableField(exist = false)
     private int quantity;
 }

@@ -19,5 +19,8 @@ public class User {
     private Date birthdate;
     private String location;
     private String mobile;
-    private String code;
+    private String openId;
+
+    private String nickname;
+    private String avatarUrl;
 }
