@@ -22,6 +22,11 @@
 			<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
 			<version>3.5.4</version>
 		</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>5.3.10</version>
+		</dependency>
 
 	<!--	以下为默认添加的，上面的才是手动添加的部分	-->
 		<dependency>

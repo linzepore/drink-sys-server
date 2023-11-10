@@ -21,7 +21,7 @@ import java.util.*;
 @NoArgsConstructor
 @ToString
 public class Order {
-    @TableId(type = IdType.ASSIGN_UUID)
+//    @TableId(type = IdType.ASSIGN_UUID)
     private String orderCode;
     private int orderStatus;
     private String openId;
@@ -30,6 +30,9 @@ public class Order {
     private String quantity;
     @JsonIgnore
     private String fid;
+    private Date add_date;
+    private Date deal_date;
+    private Date reward_date;
     @TableField(exist = false)
     private List<Food> foods= new ArrayList<>();
 

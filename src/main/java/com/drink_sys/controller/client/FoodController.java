@@ -1,4 +1,4 @@
-package com.drink_sys.controller;
+package com.drink_sys.controller.client;
 
 import com.drink_sys.entity.Food;
 import com.drink_sys.entity.User;

@@ -7,3 +7,6 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+wx:
+  appId: "wxddf5165783eb9495"
+  secret: "e912ee5abfa8ecd1007b25a338b42b60"
