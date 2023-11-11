@@ -1,15 +1,9 @@
 package com.drink_sys.controller.client;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.drink_sys.dao.client.OrderService;
-import com.drink_sys.entity.Food;
 import com.drink_sys.entity.Msg;
 import com.drink_sys.entity.Order;
-import com.drink_sys.mapper.FoodMapper;
-import com.drink_sys.mapper.OrderMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Tag(name = "C端订单管理")
 @RequestMapping("/order")
 public class OrderController {
     @Autowired

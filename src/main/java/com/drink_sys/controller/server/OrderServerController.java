@@ -6,10 +6,12 @@ import com.drink_sys.entity.Msg;
 import com.drink_sys.entity.Order;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Tag(name = "B端订单管理")
 @RequestMapping("/web/order")
 public class OrderServerController {
 

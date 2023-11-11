@@ -1,7 +1,6 @@
 package com.drink_sys.controller.client;
 
 import com.drink_sys.entity.Food;
-import com.drink_sys.entity.User;
 import com.drink_sys.mapper.FoodMapper;
 import com.drink_sys.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;

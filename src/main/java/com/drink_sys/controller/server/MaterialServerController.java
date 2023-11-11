@@ -3,6 +3,7 @@ package com.drink_sys.controller.server;
 import com.drink_sys.dao.server.WMaterialService;
 import com.drink_sys.entity.Material;
 import com.drink_sys.entity.Msg;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RequestMapping("/web/material")
+@Tag(name= "B端原料管理")
 @RestController
 public class MaterialServerController {
     @Autowired

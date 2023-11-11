@@ -4,12 +4,14 @@ import com.drink_sys.dao.client.UserService;
 import com.drink_sys.entity.Msg;
 import com.drink_sys.entity.User;
 import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Tag(name = "C端用户管理")
 @RequestMapping("user")
 public class UserController {
     @Autowired
