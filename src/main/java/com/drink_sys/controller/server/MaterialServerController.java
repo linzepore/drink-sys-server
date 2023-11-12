@@ -1,6 +1,6 @@
 package com.drink_sys.controller.server;
 
-import com.drink_sys.dao.server.WMaterialService;
+import com.drink_sys.service.server.WMaterialService;
 import com.drink_sys.entity.Material;
 import com.drink_sys.entity.Msg;
 import io.swagger.v3.oas.annotations.tags.Tag;

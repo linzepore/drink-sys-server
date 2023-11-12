@@ -1,8 +1,10 @@
 package com.drink_sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.drink_sys.entity.Order;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -20,4 +22,9 @@ public interface OrderMapper extends BaseMapper<Order> {
             "LEFT JOIN orders ON DATE(orders.add_date) = date_table.date AND  orders.fid = #{fid}\n" +
             "GROUP BY date_table.date")
     List<Map<String, Object>> get5DaySell(int fid);
+
+    /*@Select("SELECT order_code,order_status,open_id,order_total_account,quantity,fid,add_date,deal_date,reward_date" +
+            "FROM orders WHERE (order_status = #{status}) LIMIT #{page.size}")
+    @Result()
+    Page<Order> getOrderPageByStatus(Page page, int status);*/
 }

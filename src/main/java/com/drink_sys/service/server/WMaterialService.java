@@ -1,8 +1,7 @@
-package com.drink_sys.dao.server;
+package com.drink_sys.service.server;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.drink_sys.entity.Material;
 import com.drink_sys.mapper.MaterialMapper;
 import org.springframework.beans.factory.annotation.Autowired;

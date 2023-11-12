@@ -1,4 +1,4 @@
-package com.drink_sys.dao.client;
+package com.drink_sys.service.client;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.drink_sys.entity.Food;

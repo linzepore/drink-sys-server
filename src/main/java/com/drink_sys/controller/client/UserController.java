@@ -1,6 +1,6 @@
 package com.drink_sys.controller.client;
 
-import com.drink_sys.dao.client.UserService;
+import com.drink_sys.service.client.UserService;
 import com.drink_sys.entity.Msg;
 import com.drink_sys.entity.User;
 import com.fasterxml.jackson.databind.JsonNode;

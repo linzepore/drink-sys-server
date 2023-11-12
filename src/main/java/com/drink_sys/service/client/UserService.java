@@ -1,4 +1,4 @@
-package com.drink_sys.dao.client;
+package com.drink_sys.service.client;
 
 import cn.hutool.http.HttpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

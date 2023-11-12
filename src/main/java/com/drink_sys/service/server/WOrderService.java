@@ -1,9 +1,10 @@
-package com.drink_sys.dao.server;
+package com.drink_sys.service.server;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.drink_sys.entity.Food;
 import com.drink_sys.entity.Order;
 import com.drink_sys.mapper.FoodMapper;
 import com.drink_sys.mapper.OrderMapper;
@@ -13,11 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
-import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -119,9 +117,17 @@ public class WOrderService extends ServiceImpl<OrderMapper, Order> {
         return new ObjectMapper().readTree(origin_tree);
     }
     public Order getOrderById(String oid) {
+        List<Food> foods = foodMapper.selectList(null);
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
         orderQueryWrapper.eq("order_code", oid);
-        return orderMapper.selectOne(orderQueryWrapper);
+        List<Order> orders = orderMapper.selectList(orderQueryWrapper);
+        if (orders.size()==0) return null;
+        Order order_return = orders.get(0);
+        for (Order order : orders) {
+            Food food = foods.get(Integer.parseInt(order.getFid()));
+            order_return.addFood(food);
+        }
+        return order_return;
     }
     public int deleteOrder(String order_id) {
         UpdateWrapper<Order> orderUpdateWrapper = new UpdateWrapper<>();
@@ -135,15 +141,59 @@ public class WOrderService extends ServiceImpl<OrderMapper, Order> {
         return orderMapper.update(orderUpdateWrapper);
     }
     public Page<Order> getOrderW(int pageNum, int pageSize) {
+        List<Food> foods = foodMapper.selectList(null);
         Page<Order> page = new Page<>(pageNum -1, pageSize);
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
-        orderQueryWrapper.eq("order_status", 0);
-        return this.page(page,orderQueryWrapper);
+        /*orderQueryWrapper.eq("order_status", 0);
+        return this.page(page,orderQueryWrapper);*/
+        orderQueryWrapper.select("order_code,MIN(order_status) AS order_status,GROUP_CONCAT(fid) AS fid," +
+                "GROUP_CONCAT(quantity) AS quantity, MIN(open_id) AS open_id, MIN(order_total_account) AS order_total_account");
+        orderQueryWrapper.eq("order_status", 0).groupBy("order_code");
+
+        Page<Order> orderPage = this.page(page, orderQueryWrapper);
+        List<Order> records = orderPage.getRecords();
+        System.out.println(records);
+
+        // 取出当前的订单中的餐品id，存入要返回的订单中
+        for (int i = 0; i < records.size(); i++) {
+            String[] order_foods_id = records.get(i).getFid().split(",");
+            String[] order_quantity = records.get(i).getQuantity().split(",");
+            // System.out.println(this.records);
+            for (int j = 0; j < order_foods_id.length; j++) {
+                Food food = foods.get(Integer.parseInt(order_foods_id[j]));
+                food.setQuantity(Integer.parseInt(order_quantity[j]));
+                records.get(i).addFood(food);
+            }
+        }
+
+        return this.page(page,orderQueryWrapper).setRecords(records);
     }
     public Page<Order> getOrderY(int pageNum, int pageSize) {
+        List<Food> foods = foodMapper.selectList(null);
         Page<Order> page = new Page<>(pageNum -1, pageSize);
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
-        orderQueryWrapper.eq("order_status", 1);
-        return this.page(page,orderQueryWrapper);
+
+        orderQueryWrapper.select("order_code,MIN(order_status) AS order_status,GROUP_CONCAT(fid) AS fid," +
+                "GROUP_CONCAT(quantity) AS quantity, MIN(open_id) AS open_id, MIN(order_total_account) AS order_total_account");
+        orderQueryWrapper.eq("order_status", 1).groupBy("order_code");
+
+        Page<Order> orderPage = this.page(page, orderQueryWrapper);
+        List<Order> records = orderPage.getRecords();
+        System.out.println(records);
+
+        // 取出当前的订单中的餐品id，存入要返回的订单中
+        for (int i = 0; i < records.size(); i++) {
+            String[] order_foods_id = records.get(i).getFid().split(",");
+            String[] order_quantity = records.get(i).getQuantity().split(",");
+            // System.out.println(this.records);
+            for (int j = 0; j < order_foods_id.length; j++) {
+                Food food = foods.get(Integer.parseInt(order_foods_id[j]));
+                food.setQuantity(Integer.parseInt(order_quantity[j]));
+                records.get(i).addFood(food);
+            }
+        }
+
+        return this.page(page,orderQueryWrapper).setRecords(records);
+//        return this.page(page,orderQueryWrapper);
     }
 }

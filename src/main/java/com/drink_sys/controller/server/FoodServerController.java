@@ -1,16 +1,13 @@
 package com.drink_sys.controller.server;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.drink_sys.dao.server.WFoodService;
+import com.drink_sys.service.server.WFoodService;
 import com.drink_sys.entity.Food;
 import com.drink_sys.entity.Msg;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 @RestController
 @Tag(name = "B端餐品管理")

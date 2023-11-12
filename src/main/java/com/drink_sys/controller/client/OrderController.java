@@ -1,6 +1,6 @@
 package com.drink_sys.controller.client;
 
-import com.drink_sys.dao.client.OrderService;
+import com.drink_sys.service.client.OrderService;
 import com.drink_sys.entity.Msg;
 import com.drink_sys.entity.Order;
 import io.swagger.v3.oas.annotations.tags.Tag;

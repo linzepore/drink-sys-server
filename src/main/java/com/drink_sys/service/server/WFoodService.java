@@ -1,4 +1,4 @@
-package com.drink_sys.dao.server;
+package com.drink_sys.service.server;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -8,8 +8,6 @@ import com.drink_sys.entity.Food;
 import com.drink_sys.mapper.FoodMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class WFoodService {
