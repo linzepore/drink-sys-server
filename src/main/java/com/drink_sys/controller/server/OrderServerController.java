@@ -71,7 +71,7 @@ public class OrderServerController {
         return jsonNodeMsg;
     }
     @GetMapping("/getOrderById")
-    public Msg<Order> getOrderById(String queryNum) {
+    public Msg<Order> getOrderById(String queryNum) throws CloneNotSupportedException {
         Msg<Order> orderMsg = new Msg<>();
         try {
             Order order = wOrderService.getOrderById(queryNum);
@@ -94,7 +94,7 @@ public class OrderServerController {
                 stringMsg.beSucceed("success", "成功删除了 " + deleted + " 条记录");
             } else stringMsg.beFailed(null, "删除失败");
         } catch (Exception e) {
-            stringMsg.beFailed("fail", "更新失败，发生了异常：" + e);
+            stringMsg.beFailed("fail", "删除失败，发生了异常：" + e);
         }
         return stringMsg;
     }
@@ -105,9 +105,9 @@ public class OrderServerController {
             int updated = wOrderService.updateState(order_id, order_status);
             if (updated > 0) {
                 stringMsg.beSucceed("success", "成功修改了 " + updated + " 条记录");
-            } else stringMsg.beFailed(null, "删除失败");
+            } else stringMsg.beFailed(null, "修改失败");
         } catch (Exception e) {
-            stringMsg.beFailed("fail", "删除失败，发生了异常：" + e);
+            stringMsg.beFailed("fail", "修改失败，发生了异常：" + e);
         }
         return stringMsg;
     }
@@ -116,7 +116,7 @@ public class OrderServerController {
         return wOrderService.getOrderW(pageNum, pageSize);
     }
     @GetMapping("/getOrderY")
-    public Page<Order> getOrderY(int pageNum, int pageSize) {
+    public Page<Order> getOrderY(int pageNum, int pageSize) throws CloneNotSupportedException {
         return wOrderService.getOrderY(pageNum, pageSize);
     }
 }

@@ -116,7 +116,7 @@ public class WOrderService extends ServiceImpl<OrderMapper, Order> {
         String origin_tree = "{\"cafe\":"+ Arrays.toString(qC) +", \"milk\":"+ Arrays.toString(qT) +", \"date\":["+ daysResult +"]}";
         return new ObjectMapper().readTree(origin_tree);
     }
-    public Order getOrderById(String oid) {
+    public Order getOrderById(String oid) throws CloneNotSupportedException {
         List<Food> foods = foodMapper.selectList(null);
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
         orderQueryWrapper.eq("order_code", oid);
@@ -124,7 +124,7 @@ public class WOrderService extends ServiceImpl<OrderMapper, Order> {
         if (orders.size()==0) return null;
         Order order_return = orders.get(0);
         for (Order order : orders) {
-            Food food = foods.get(Integer.parseInt(order.getFid()));
+            Food food = foods.get(Integer.parseInt(order.getFid())).clone();
             order_return.addFood(food);
         }
         return order_return;
@@ -169,7 +169,7 @@ public class WOrderService extends ServiceImpl<OrderMapper, Order> {
 
         return this.page(page,orderQueryWrapper).setRecords(records);
     }
-    public Page<Order> getOrderY(int pageNum, int pageSize) {
+    public Page<Order> getOrderY(int pageNum, int pageSize) throws CloneNotSupportedException {
         List<Food> foods = foodMapper.selectList(null);
         Page<Order> page = new Page<>(pageNum -1, pageSize);
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
@@ -188,7 +188,7 @@ public class WOrderService extends ServiceImpl<OrderMapper, Order> {
             String[] order_quantity = records.get(i).getQuantity().split(",");
             // System.out.println(this.records);
             for (int j = 0; j < order_foods_id.length; j++) {
-                Food food = foods.get(Integer.parseInt(order_foods_id[j]));
+                Food food = foods.get(Integer.parseInt(order_foods_id[j])).clone();
                 food.setQuantity(Integer.parseInt(order_quantity[j]));
                 records.get(i).addFood(food);
             }
