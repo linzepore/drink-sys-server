@@ -112,7 +112,7 @@ public class OrderServerController {
         return stringMsg;
     }
     @GetMapping("/getOrderW")
-    public Page<Order> getOrderW(int pageNum, int pageSize) {
+    public Page<Order> getOrderW(int pageNum, int pageSize) throws CloneNotSupportedException {
         return wOrderService.getOrderW(pageNum, pageSize);
     }
     @GetMapping("/getOrderY")

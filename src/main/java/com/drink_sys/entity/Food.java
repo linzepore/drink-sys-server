@@ -14,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @TableName("foods")
-public class Food {
+public class Food implements Cloneable {
     private int id;
     private String name;
     private double price;
@@ -23,4 +23,9 @@ public class Food {
     private int material;
     @TableField(exist = false)
     private int quantity;
+
+    @Override
+    public Food clone() throws CloneNotSupportedException {
+        return (Food) super.clone();
+    }
 }
