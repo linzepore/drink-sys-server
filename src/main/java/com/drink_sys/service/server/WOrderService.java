@@ -125,6 +125,7 @@ public class WOrderService extends ServiceImpl<OrderMapper, Order> {
         Order order_return = orders.get(0);
         for (Order order : orders) {
             Food food = foods.get(Integer.parseInt(order.getFid())).clone();
+            food.setQuantity(Integer.parseInt(order.getQuantity()));
             order_return.addFood(food);
         }
         return order_return;

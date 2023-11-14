@@ -54,9 +54,7 @@ public class OrderService {
         JsonNode orderNode = objectMapper.readTree(orderString);
         JsonNode orderFoods = orderNode.get("order").get("foods");
         JsonNode order = orderNode.get("order");
-        if(orderFoods.size() < 0) {
-            return false;
-        }
+        if(orderFoods.size() < 0) return false;
         UUID uuid = UUID.randomUUID();
         for (int i = 0; i < orderFoods.size(); i++) {
             if (!Objects.equals(orderFoods.get(i).get("id").asText(), "0")) {

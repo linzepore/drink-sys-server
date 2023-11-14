@@ -1,17 +1,13 @@
 package com.drink_sys.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.apache.ibatis.type.JdbcType;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -32,7 +28,7 @@ public class Order {
     private String fid;
     private Date add_date;
     private Date deal_date;
-    private Date reward_date;
+    private Date refund_date;
     @TableField(exist = false)
     private List<Food> foods= new ArrayList<>();
 

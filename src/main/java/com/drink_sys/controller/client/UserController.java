@@ -24,30 +24,28 @@ public class UserController {
             if (!userExist) {
                 User user = new User();
                 user.setOpenId(openId);
-                this.userService.addUser(user);
-                return stringMsg.beSucceed("success", "添加成功");
+                int added = this.userService.addUser(user);
+                if (added > 0 ) return stringMsg.beSucceed("success", "添加成功");
+                else return stringMsg.beSucceed("fail", "添加失败");
             }
         } catch (Exception e) {
             return new Msg<String>().beFailed("fail", "添加失败,出现了异常: " + e);
         }
         return stringMsg.beFailed("fail","添加失败,该用户可能已存在");
     }
-    @PostMapping("/userDetailInfoAdd")
-    public Msg<String> userDetailAdd(@RequestBody User user) {
+    @PostMapping("/userDetailInfoUpdate")
+    public Msg<String> userDetailInfoUpdate(@RequestBody User user) {
         Msg<String> stringMsg = new Msg<>();
         try {
+
             System.out.println(user);
             if (user != null) {
-                if (userService.addUser(user) > 0) {
-                    stringMsg.beSucceed("success", "添加成功");
-                } else {
-                    stringMsg.beFailed("fail", "添加失败,无法插入数据");
-                }
-            } else {
-                stringMsg.beFailed("fail", "添加失败,用户为空");
-            }
+                if (userService.updateUser(user) > 0) stringMsg.beSucceed("success", "更新成功");
+                else stringMsg.beFailed("fail", "更新失败,无法插入数据");
+            } else stringMsg.beFailed("fail", "更新失败,用户为空");
+
         } catch (Exception e) {
-            return new Msg<String>().beFailed("fail", "添加失败,出现了异常: " + e);
+            return new Msg<String>().beFailed("fail", "更新失败,出现了异常: " + e);
         }
         return stringMsg;
     }
