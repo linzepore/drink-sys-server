@@ -36,8 +36,10 @@ public class UserService {
     }
     public int updateUser(User user) {
         UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
+        userUpdateWrapper.set("name", user.getName()).set("birthdate",user.getBirthdate())
+                        .set("location", user.getLocation()).set("mobile", user.getMobile());
         userUpdateWrapper.eq("open_id", user.getOpenId());
-        return userMapper.update(user, userUpdateWrapper);
+        return userMapper.update(userUpdateWrapper);
     }
     public List<User> getUser(String openId) {
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();

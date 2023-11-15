@@ -23,23 +23,25 @@ public class OrderService {
     private FoodMapper foodMapper;
     @Autowired
     private OrderMapper orderMapper;
-    public List<Order> getOrderByOpenId(String openId) {
+    public List<Order> getOrderByOpenId(String openId) throws CloneNotSupportedException {
         this.foods = foodMapper.selectList(null);
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
         // 等同于
         // SELECT order_code,GROUP_CONCAT(fid) AS fid1,GROUP_CONCAT(quantity) AS quantity1,open_id,
         // MIN(order_total_account) FROM orders WHERE (open_id = 121) GROUP BY order_code
         queryWrapper.select("order_code,MIN(order_status) AS order_status,GROUP_CONCAT(fid) AS fid," +
-                "GROUP_CONCAT(quantity) AS quantity, open_id, MIN(order_total_account) AS order_total_account");
+                "GROUP_CONCAT(quantity) AS quantity, open_id, MIN(order_total_account) AS order_total_account, " +
+                "MIN(add_date) AS add_date, MIN(refund_date) AS refund_date, MIN(deal_date) AS deal_date");
         queryWrapper.eq("open_id", openId).groupBy("order_code");
         List<Order> orders = orderMapper.selectList(queryWrapper);
+        System.out.println(orders);
         // 取出当前的订单中的餐品id，存入要返回的订单中
         for (int i = 0; i < orders.size(); i++) {
             String[] order_foods_id = orders.get(i).getFid().split(",");
             String[] order_quantity = orders.get(i).getQuantity().split(",");
             System.out.println(this.foods);
             for (int j = 0; j < order_foods_id.length; j++) {
-                Food food = foods.get(Integer.parseInt(order_foods_id[j]));
+                Food food = foods.get(Integer.parseInt(order_foods_id[j])).clone();
                 food.setQuantity(Integer.parseInt(order_quantity[j]));
                 orders.get(i).addFood(food);
             }

@@ -148,7 +148,8 @@ public class WOrderService extends ServiceImpl<OrderMapper, Order> {
         /*orderQueryWrapper.eq("order_status", 0);
         return this.page(page,orderQueryWrapper);*/
         orderQueryWrapper.select("order_code,MIN(order_status) AS order_status,GROUP_CONCAT(fid) AS fid," +
-                "GROUP_CONCAT(quantity) AS quantity, MIN(open_id) AS open_id, MIN(order_total_account) AS order_total_account");
+                "GROUP_CONCAT(quantity) AS quantity, MIN(open_id) AS open_id, MIN(order_total_account) AS order_total_account, " +
+                "MIN(add_date) AS add_date, MIN(refund_date) AS refund_date, MIN(deal_date) AS deal_date");
         orderQueryWrapper.eq("order_status", 0).groupBy("order_code");
 
         Page<Order> orderPage = this.page(page, orderQueryWrapper);
@@ -176,7 +177,8 @@ public class WOrderService extends ServiceImpl<OrderMapper, Order> {
         QueryWrapper<Order> orderQueryWrapper = new QueryWrapper<>();
 
         orderQueryWrapper.select("order_code,MIN(order_status) AS order_status,GROUP_CONCAT(fid) AS fid," +
-                "GROUP_CONCAT(quantity) AS quantity, MIN(open_id) AS open_id, MIN(order_total_account) AS order_total_account");
+                "GROUP_CONCAT(quantity) AS quantity, MIN(open_id) AS open_id, MIN(order_total_account) AS order_total_account," +
+                "MIN(add_date) AS add_date, MIN(refund_date) AS refund_date, MIN(deal_date) AS deal_date");
         orderQueryWrapper.eq("order_status", 1).groupBy("order_code");
 
         Page<Order> orderPage = this.page(page, orderQueryWrapper);

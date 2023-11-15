@@ -26,9 +26,9 @@ public class Order {
     private String quantity;
     @JsonIgnore
     private String fid;
-    private Date add_date;
-    private Date deal_date;
-    private Date refund_date;
+    private Date addDate;
+    private Date dealDate;
+    private Date refundDate;
     @TableField(exist = false)
     private List<Food> foods= new ArrayList<>();
 
