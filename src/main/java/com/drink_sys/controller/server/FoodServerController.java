@@ -44,7 +44,7 @@ public class FoodServerController {
             Food food = new Food();
             food.setId(jsonNode.get("drink_id").asInt());
             food.setName(jsonNode.get("drink_name").asText());
-            food.setImage(jsonNode.get("drink_photo").asText());
+            food.setImage(jsonNode.get("drink_photo").binaryValue());
             food.setPrice(jsonNode.get("drink_price").asDouble());
             food.setMaterial(jsonNode.get("drink_material").asInt());
 

@@ -1,6 +1,7 @@
 package com.drink_sys.service.client;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.drink_sys.entity.Food;
 import com.drink_sys.entity.Order;
 import com.drink_sys.mapper.FoodMapper;
@@ -67,5 +68,11 @@ public class OrderService {
             }
         }
         return true;
+    }
+    public int cancelOrder(String orderCode) {
+        UpdateWrapper<Order> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("order_code", orderCode);
+        updateWrapper.set("refund_date",new Date());
+        return orderMapper.update(updateWrapper);
     }
 }

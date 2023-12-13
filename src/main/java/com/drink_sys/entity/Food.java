@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.apache.ibatis.type.BlobTypeHandler;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +20,8 @@ public class Food implements Cloneable {
     private String name;
     private double price;
     private String description;
-    private String image;
+    @TableField(typeHandler = BlobTypeHandler.class)
+    private byte[] image;
     private int material;
     @TableField(exist = false)
     private int quantity;

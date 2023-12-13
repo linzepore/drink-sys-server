@@ -5,10 +5,7 @@ import com.drink_sys.entity.Msg;
 import com.drink_sys.entity.Order;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,10 +33,24 @@ public class OrderController {
             if(added) {
                 return stringMsg.beSucceed("success", "添加成功");
             } else {
-                return stringMsg.beSucceed("fail", "添加失败,位置错误");
+                return stringMsg.beSucceed("fail", "添加失败,未知错误");
             }
         } catch (Exception e) {
             return new Msg<String>().beSucceed("fail", "添加失败,出现了异常: " + e);
+        }
+    }
+    @PostMapping ("/orderCancel")
+    public Msg<String> cancelOrder(String orderCode) {
+        try{
+            int deleted = orderService.cancelOrder(orderCode);
+            Msg<String> stringMsg = new Msg<>();
+            if(deleted > 0 ) {
+                return stringMsg.beSucceed("success", "删除成功");
+            } else {
+                return stringMsg.beSucceed("fail", "删除失败,未知错误");
+            }
+        } catch (Exception e) {
+            return new Msg<String>().beSucceed("fail", "删除失败,出现了异常: " + e);
         }
     }
 }
