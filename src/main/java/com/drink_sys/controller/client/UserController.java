@@ -3,6 +3,8 @@ package com.drink_sys.controller.client;
 import com.drink_sys.service.client.UserService;
 import com.drink_sys.entity.Msg;
 import com.drink_sys.entity.User;
+import com.drink_sys.service.server.WUserService;
+import com.drink_sys.util.JWTUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    WUserService wUserService;
     @PostMapping("/userAdd")
     public Msg<String> userAdd(String openId) {
         Msg<String> stringMsg = new Msg<>();
@@ -94,5 +98,22 @@ public class UserController {
         } catch (Exception e) {
             return new Msg<JsonNode>().beFailed(null, "获取失败,出现了异常: " + e);
         }
+    }
+
+    @GetMapping("/login")
+    public Msg<String> login(String username, String password) {
+        System.out.println("aaaaaa");
+        Msg<String> stringMsg = new Msg<>();
+        try {
+            if (wUserService.verifyUser(username, password)) {
+                User u = new User();
+                u.setOpenId(password);
+                u.setName(username);
+                return stringMsg.beSucceed(JWTUtils.getToken(u),"Token获取成功");
+            }
+        } catch (Exception e) {
+            return stringMsg.beFailed(null, "验证失败");
+        }
+        return new Msg<String>().beFailed(null, "验证失败");
     }
 }

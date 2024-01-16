@@ -1,10 +1,16 @@
 package com.drink_sys.controller.client;
 
+import cn.hutool.json.JSON;
+import com.drink_sys.controller.machine.WebSocketController;
 import com.drink_sys.service.client.OrderService;
 import com.drink_sys.entity.Msg;
 import com.drink_sys.entity.Order;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +21,8 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private WebSocketController webSocketController;
 
     @PostMapping("/orderGet")
     public Msg<List<Order>> getOrder(String openId){
@@ -31,6 +39,9 @@ public class OrderController {
             Boolean added = orderService.addOrder(orderString);
             Msg<String> stringMsg = new Msg<>();
             if(added) {
+                String orderId = new ObjectMapper().readTree(orderString).get("order").get("orderId").asText();
+                // 发送新订单消息
+                webSocketController.notifyNewOrder(orderId);
                 return stringMsg.beSucceed("success", "添加成功");
             } else {
                 return stringMsg.beSucceed("fail", "添加失败,未知错误");
